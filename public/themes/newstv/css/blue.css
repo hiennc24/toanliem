@@ -781,8 +781,8 @@ fieldset[disabled] .btn-primary-outline.focus {
 }
 
 .nav-top {
-  background-color: #f5f5f5;
-  color: #666666;
+    background-color: #032140;
+    color: #ffffff;
 }
 
 @media (min-width: 768px) {

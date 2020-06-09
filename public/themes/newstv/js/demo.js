@@ -11,7 +11,7 @@ var Demo = function () {
 
         // handle theme colors
         var setColor = function (color) {
-            $('#style_color').attr('href', '/themes/newstv/assets/css/' + color + '.css');
+            $('#style_color').attr('href', '/themes/newstv/css/' + color + '.css');
         };
 
         $('.theme-colors > ul > li > a', panel).click(function (event) {

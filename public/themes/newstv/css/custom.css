@@ -193,3 +193,13 @@
 .language_bar_list li a {
     text-align: left;
 }
+
+figure.image {
+    margin : 10px 0;
+}
+
+figure.image figcaption {
+    background: #f5f5f5;
+    padding: 10px;
+    font-size: 90%;
+}
