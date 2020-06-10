@@ -38,8 +38,6 @@ class DeletedContentListener
                 'reference_id'   => $event->data->id,
                 'reference_type' => get_class($event->data),
             ]);
-
-            cache()->forget('public.sitemap');
         } catch (Exception $exception) {
             info($exception->getMessage());
         }

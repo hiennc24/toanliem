@@ -145,16 +145,16 @@ class Google_Service_Apigee_Resource_OrganizationsDevelopersApps extends Google_
    * `organizations/{org}/developers/{developer_email}/apps/{app}`
    * @param array $optParams Optional parameters.
    *
-   * @opt_param string query **Note**: Must be used in conjunction with the
-   * `entity` parameter.
-   *
-   * Set to `count` to return the number of API resources that have been approved
-   * for access by a developer app in the specified Apigee organization.
    * @opt_param string entity **Note**: Must be used in conjunction with the
    * `query` parameter.
    *
    * Set to `apiresources` to return the number of API resources that have been
    * approved for access by a developer app in the specified Apigee organization.
+   * @opt_param string query **Note**: Must be used in conjunction with the
+   * `entity` parameter.
+   *
+   * Set to `count` to return the number of API resources that have been approved
+   * for access by a developer app in the specified Apigee organization.
    * @return Google_Service_Apigee_GoogleCloudApigeeV1DeveloperApp
    */
   public function get($name, $optParams = array())

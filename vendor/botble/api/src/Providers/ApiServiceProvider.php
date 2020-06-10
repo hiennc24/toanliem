@@ -10,6 +10,9 @@ class ApiServiceProvider extends ServiceProvider
 {
     use LoadAndPublishDataTrait;
 
+    /**
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     */
     public function register()
     {
         $this->app->make('router')->pushMiddlewareToGroup('api', ForceJsonResponseMiddleware::class);
@@ -18,12 +21,13 @@ class ApiServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->setNamespace('packages/api')
+            ->loadMigrations()
             ->publishAssets();
 
         $this->app->booted(function () {
             config([
-                'apidoc.routes.0.match.prefixes' => ['api/*'],
-                'apidoc.routes.0.apply.headers'  => [
+                'scribe.routes.0.match.prefixes' => ['api/*'],
+                'scribe.routes.0.apply.headers'  => [
                     'Authorization' => 'Bearer {token}',
                     'Api-Version'   => 'v1',
                 ],

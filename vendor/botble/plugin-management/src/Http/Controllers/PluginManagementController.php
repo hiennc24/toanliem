@@ -16,7 +16,7 @@ class PluginManagementController extends Controller
 {
     /**
      * Show all plugins in system
-     * @throws FileNotFoundException
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
@@ -71,8 +71,7 @@ class PluginManagementController extends Controller
      * @param Request $request
      * @param BaseHttpResponse $response
      * @param PluginService $pluginService
-     * @return mixed
-     * @throws FileNotFoundException
+     * @return BaseHttpResponse
      */
     public function update(Request $request, BaseHttpResponse $response, PluginService $pluginService)
     {

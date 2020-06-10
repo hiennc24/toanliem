@@ -59,7 +59,7 @@ if (!function_exists('do_action')) {
 
 if (!function_exists('get_hooks')) {
     /**
-     * @param null $name
+     * @param string|null $name
      * @param bool $isFilter
      * @return array
      */

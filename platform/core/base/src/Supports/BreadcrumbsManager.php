@@ -149,12 +149,12 @@ class BreadcrumbsManager
     /**
      * @param string|null $name
      * @param mixed ...$params
-     * @return HtmlString
+     * @return string
      * @throws Exception
      */
-    public function render(string $name = null, ...$params): HtmlString
+    public function render(string $name = null, ...$params): string
     {
-        return $this->view('core/base::layouts.partials.breadcrumbs', $name, ...$params);
+        return $this->view('core/base::layouts.partials.breadcrumbs', $name, ...$params)->toHtml();
     }
 
     /**

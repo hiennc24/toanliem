@@ -1,4 +1,4 @@
-{!! MailVariable::prepareData(str_replace('{{ verify_link }}', $link, '
+{!! EmailHandler::prepareData(str_replace('{{ verify_link }}', $link, '
 
 {{ header }}
 

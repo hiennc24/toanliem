@@ -2,6 +2,7 @@
 
 namespace Botble\Contact\Providers;
 
+use EmailHandler;
 use Illuminate\Routing\Events\RouteMatched;
 use Botble\Base\Supports\Helper;
 use Botble\Base\Traits\LoadAndPublishDataTrait;
@@ -15,7 +16,6 @@ use Botble\Contact\Repositories\Eloquent\ContactRepository;
 use Botble\Contact\Repositories\Interfaces\ContactReplyInterface;
 use Event;
 use Illuminate\Support\ServiceProvider;
-use MailVariable;
 
 class ContactServiceProvider extends ServiceProvider
 {
@@ -56,16 +56,8 @@ class ContactServiceProvider extends ServiceProvider
                 'url'         => route('contacts.index'),
                 'permissions' => ['contacts.index'],
             ]);
-        });
 
-        MailVariable::setModule(CONTACT_MODULE_SCREEN_NAME)
-            ->addVariables([
-                'contact_name'    => __('Contact name'),
-                'contact_subject' => __('Contact subject'),
-                'contact_email'   => __('Contact email'),
-                'contact_phone'   => __('Contact phone'),
-                'contact_address' => __('Contact address'),
-                'contact_content' => __('Contact content'),
-            ]);
+            EmailHandler::addTemplateSettings(CONTACT_MODULE_SCREEN_NAME, config('plugins.contact.email'));
+        });
     }
 }

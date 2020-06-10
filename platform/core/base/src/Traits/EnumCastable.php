@@ -7,8 +7,8 @@ use Botble\Base\Supports\Enum;
 trait EnumCastable
 {
     /**
-     * @param $key
-     * @param $value
+     * @param string $key
+     * @param mixed $value
      * @return mixed
      */
     protected function castAttribute($key, $value)

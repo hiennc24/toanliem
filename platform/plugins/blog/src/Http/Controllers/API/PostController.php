@@ -84,7 +84,6 @@ class PostController extends Controller
      * @param PostInterface $postRepository
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     * @throws FileNotFoundException
      */
     public function getSearch(Request $request, PostInterface $postRepository, BaseHttpResponse $response)
     {

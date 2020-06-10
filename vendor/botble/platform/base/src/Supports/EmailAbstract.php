@@ -30,8 +30,8 @@ class EmailAbstract extends Mailable
     /**
      * Create a new message instance.
      *
-     * @param $content
-     * @param $subject
+     * @param string $content
+     * @param string $subject
      * @param array $data
      */
     public function __construct($content, $subject, $data = [])

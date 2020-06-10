@@ -10,7 +10,6 @@ class ActionFacade extends Facade
 
     /**
      * @return string
-     *
      * @since 2.1
      */
     protected static function getFacadeAccessor()

@@ -21,7 +21,7 @@ abstract class ActionHookEvent
      * @param integer $priority Priority of the action
      * @param integer $arguments Number of arguments to accept
      */
-    public function addListener($hook, $callback, $priority = 20, $arguments = 1)
+    public function addListener(string $hook, $callback, $priority = 20, $arguments = 1)
     {
         while (isset($this->listeners[$hook][$priority])) {
             $priority += 1;
@@ -31,10 +31,10 @@ abstract class ActionHookEvent
     }
 
     /**
-     * @param $hook
+     * @param string $hook
      * @return $this
      */
-    public function removeListener($hook)
+    public function removeListener(string $hook)
     {
         Arr::forget($this->listeners, $hook);
 

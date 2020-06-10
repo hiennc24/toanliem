@@ -6,6 +6,7 @@ use Botble\Media\Repositories\Eloquent\MediaFileRepository;
 use Botble\Media\Repositories\Interfaces\MediaFileInterface;
 use Exception;
 use Illuminate\Console\Command;
+use Illuminate\Support\Str;
 use RvMedia;
 
 class DeleteThumbnailCommand extends Command
@@ -46,7 +47,7 @@ class DeleteThumbnailCommand extends Command
     {
         $files = $this->fileRepository->allBy([], [], ['url', 'mime_type']);
 
-        $this->info('Processing ' . $files->count() . ' file(s)...');
+        $this->info('Processing ' . $files->count() . ' ' . Str::plural('file', $files->count()) . '...');
 
         $errors = [];
 

@@ -334,7 +334,7 @@ class Manager
      * @param bool $json
      * @return array
      */
-    protected function makeTree(array $translations, $json = false)
+    protected function makeTree($translations, $json = false)
     {
         $array = [];
         foreach ($translations as $translation) {

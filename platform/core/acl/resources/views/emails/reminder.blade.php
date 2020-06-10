@@ -1,4 +1,4 @@
-{!! MailVariable::prepareData(str_replace('{{ reset_link }}', $link, '
+{!! EmailHandler::prepareData(str_replace('{{ reset_link }}', $link, '
 
 {{ header }}
 

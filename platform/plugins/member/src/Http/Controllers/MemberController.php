@@ -71,7 +71,7 @@ class MemberController extends BaseController
             'password'     => bcrypt($request->input('password')),
             'confirmed_at' => now(),
         ]);
-        
+
         $member = $this->memberRepository->createOrUpdate($request->input());
 
         event(new CreatedContentEvent(MEMBER_MODULE_SCREEN_NAME, $request, $member));
@@ -139,7 +139,7 @@ class MemberController extends BaseController
         } catch (Exception $exception) {
             return $response
                 ->setError()
-                ->setMessage(trans('core/base::notices.cannot_delete'));
+                ->setMessage($exception->getMessage());
         }
     }
 

@@ -10,7 +10,7 @@ use Illuminate\Support\Arr;
 use Botble\CustomField\Repositories\Interfaces\CustomFieldInterface;
 use Botble\CustomField\Repositories\Interfaces\FieldItemInterface;
 use Illuminate\Support\Str;
-use Storage;
+use RvMedia;
 
 class FieldGroupRepository extends RepositoriesAbstract implements FieldGroupInterface
 {
@@ -94,7 +94,7 @@ class FieldGroupRepository extends RepositoriesAbstract implements FieldGroupInt
                 }
 
                 if ($row->type == 'file' && !empty($item['value'])) {
-                    $item['full_url'] = Storage::url($item['value']);
+                    $item['full_url'] = RvMedia::url($item['value']);
                 }
             }
 
@@ -120,7 +120,7 @@ class FieldGroupRepository extends RepositoriesAbstract implements FieldGroupInt
                 }
 
                 if ($item['type'] == 'file') {
-                    $item['full_url'] = Storage::url($item['value']);
+                    $item['full_url'] = RvMedia::url($item['value']);
                 }
             }
         }

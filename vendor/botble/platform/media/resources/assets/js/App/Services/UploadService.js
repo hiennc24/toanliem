@@ -31,8 +31,16 @@ export class UploadService {
 
     setupDropZone() {
         let _self = this;
+
+        let _dropZoneConfig = this.getDropZoneConfig();
+        _self.filesUpload = 0;
+
+        if (_self.dropZone) {
+            _self.dropZone.destroy();
+        }
+
         _self.dropZone = new Dropzone(document.querySelector('.rv-media-items'), {
-            url: _self.uploadUrl,
+            ..._dropZoneConfig,
             thumbnailWidth: false,
             thumbnailHeight: false,
             parallelUploads: 1,
@@ -40,12 +48,29 @@ export class UploadService {
             clickable: '.js-dropzone-upload',
             previewTemplate: false,
             previewsContainer: false,
-            uploadMultiple: true,
-            sending: (file, xhr, formData) => {
+            sending: function (file, xhr, formData) {
                 formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
                 formData.append('folder_id', Helpers.getRequestParams().folder_id);
                 formData.append('view_in', Helpers.getRequestParams().view_in);
             },
+            chunksUploaded: (file, done) => {
+                _self.uploadProgressContainer.find('.progress-percent').html('100%');
+                done();
+            },
+            accept: (file, done) => {
+                _self.filesUpload++;
+                _self.totalError = 0;
+                done();
+            },
+            uploadprogress: (file, progress, bytesSent) => {
+                let percent = bytesSent / file.size * 100;
+                if (file.upload.chunked && percent > 99) {
+                    percent = percent - 1;
+                }
+                let percentShow = (percent > 100 ? '100' : parseInt(percent)) + '%';
+                let el = _self.uploadProgressContainer.find('li').eq(file.index - 1);
+                el.find('.progress-percent').html(percentShow);
+            }
         });
 
         _self.dropZone.on('addedfile', file => {
@@ -58,7 +83,10 @@ export class UploadService {
         });
 
         _self.dropZone.on('complete', file => {
-            _self.changeProgressStatus(file);
+            if (file.accepted) {
+                _self.changeProgressStatus(file);
+            }
+            _self.filesUpload = 0;
         });
 
         _self.dropZone.on('queuecomplete', () => {
@@ -77,7 +105,7 @@ export class UploadService {
         /**
          * Close upload progress pane
          */
-        _self.$body.off('click', '.rv-upload-progress .close-pane').on('click', '.rv-upload-progress .close-pane', event =>  {
+        _self.$body.off('click', '.rv-upload-progress .close-pane').on('click', '.rv-upload-progress .close-pane', event => {
             event.preventDefault();
             $('.rv-upload-progress').addClass('hide-the-pane');
             _self.totalError = 0;
@@ -93,8 +121,12 @@ export class UploadService {
             .replace(/__fileName__/gi, $fileName)
             .replace(/__fileSize__/gi, UploadService.formatFileSize($fileSize))
             .replace(/__status__/gi, 'warning')
-            .replace(/__message__/gi, 'Uploading')
-        ;
+            .replace(/__message__/gi, 'Uploading');
+
+        if (this.checkUploadTotalProgress() && this.uploadProgressContainer.find('li').length >= 1) {
+            return;
+        }
+
         this.uploadProgressContainer.append(template);
         this.uploadProgressBox.removeClass('hide-the-pane');
         this.uploadProgressBox.find('.panel-body')
@@ -104,6 +136,10 @@ export class UploadService {
     changeProgressStatus(file) {
         let _self = this;
         let $progressLine = _self.uploadProgressContainer.find('li:nth-child(' + file.index + ')');
+        if (this.checkUploadTotalProgress()) {
+            $progressLine = _self.uploadProgressContainer.find('li:first');
+        }
+
         let $label = $progressLine.find('.label');
         $label.removeClass('label-success label-danger label-warning');
 
@@ -115,11 +151,11 @@ export class UploadService {
         $label.html(response.error === true || file.status === 'error' ? 'Error' : 'Uploaded');
         if (file.status === 'error') {
             if (file.xhr.status === 422) {
-                let error_html = '';
+                let errorHtml = '';
                 $.each(response.errors, (key, item) => {
-                    error_html += '<span class="text-danger">' + item + '</span><br>';
+                    errorHtml += '<span class="text-danger">' + item + '</span><br>';
                 });
-                $progressLine.find('.file-error').html(error_html);
+                $progressLine.find('.file-error').html(errorHtml);
             } else if (file.xhr.status === 500) {
                 $progressLine.find('.file-error').html('<span class="text-danger">' + file.xhr.statusText + '</span>');
             }
@@ -142,6 +178,27 @@ export class UploadService {
             bytes /= thresh;
             ++u;
         } while (Math.abs(bytes) >= thresh && u < units.length - 1);
+
         return bytes.toFixed(1) + ' ' + units[u];
+    }
+
+    getDropZoneConfig() {
+        return {
+            url: this.uploadUrl,
+            uploadMultiple: !RV_MEDIA_CONFIG.chunk.enabled,
+            chunking: RV_MEDIA_CONFIG.chunk.enabled,
+            forceChunking: true, // forces chunking when file.size < chunkSize
+            parallelChunkUploads: false, // allows chunks to be uploaded in parallel (this is independent of the parallelUploads option)
+            chunkSize: RV_MEDIA_CONFIG.chunk.chunk_size, // chunk size 1,000,000 bytes (~1MB)
+            retryChunks: true, // retry chunks on failure
+            retryChunksLimit: 3, // retry maximum of 3 times (default is 3)
+            timeout: 0, // MB,
+            maxFilesize: RV_MEDIA_CONFIG.chunk.max_file_size, // MB
+            maxFiles: null, // max files upload,
+        };
+    }
+
+    checkUploadTotalProgress() {
+        return this.filesUpload === 1;
     }
 }

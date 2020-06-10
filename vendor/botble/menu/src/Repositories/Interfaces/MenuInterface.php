@@ -8,15 +8,15 @@ interface MenuInterface extends RepositoryInterface
 {
 
     /**
-     * @param $slug
-     * @param $active
-     * @param $selects
+     * @param string $slug
+     * @param bool $active
+     * @param array $selects
      * @return mixed
      */
-    public function findBySlug($slug, $active, $selects = []);
+    public function findBySlug($slug, $active, array $selects = []);
 
     /**
-     * @param $name
+     * @param string $name
      * @return mixed
      */
     public function createSlug($name);

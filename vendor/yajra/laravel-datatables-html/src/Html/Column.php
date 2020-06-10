@@ -438,6 +438,20 @@ class Column extends Fluent
     }
 
     /**
+     * Set column renderer with give raw value.
+     *
+     * @param mixed $value
+     * @return $this
+     * @see https://datatables.net/reference/option/columns.render
+     */
+    public function renderRaw($value)
+    {
+        $this->attributes['render'] = $value;
+
+        return $this;
+    }
+
+    /**
      * Parse render attribute.
      *
      * @param mixed $value
@@ -477,7 +491,7 @@ class Column extends Fluent
             return false;
         }
 
-        return Str::startsWith(trim($value), ['$.fn.dataTable.render']);
+        return Str::startsWith(trim($value), ['$.fn.dataTable.render', '[']);
     }
 
     /**

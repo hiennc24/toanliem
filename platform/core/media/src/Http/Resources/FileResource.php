@@ -22,7 +22,7 @@ class FileResource extends JsonResource
             'full_url'   => RvMedia::url($this->url),
             'type'       => $this->type,
             'icon'       => $this->icon,
-            'thumb'      => $this->type == 'image' ? get_image_url($this->url, 'thumb') : null,
+            'thumb'      => $this->canGenerateThumbnails() ? get_image_url($this->url, 'thumb') : null,
             'size'       => $this->human_size,
             'mime_type'  => $this->mime_type,
             'created_at' => date_from_database($this->created_at, 'Y-m-d H:i:s'),

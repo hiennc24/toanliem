@@ -19,7 +19,6 @@ class PluginManagementServiceProvider extends ServiceProvider
     use LoadAndPublishDataTrait;
 
     /**
-     * @throws FileNotFoundException
      * @throws InvalidArgumentException
      * @throws Exception
      */

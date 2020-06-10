@@ -46,7 +46,6 @@ class PluginService
     /**
      * @param string $plugin
      * @return array
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function activate(string $plugin): array
     {
@@ -120,7 +119,6 @@ class PluginService
     /**
      * @param string $plugin
      * @return array
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     protected function validate(string $plugin): array
     {

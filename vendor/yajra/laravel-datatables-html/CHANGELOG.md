@@ -8,6 +8,18 @@
 
 ## CHANGELOG
 
+### v4.27.0 - 05-29-2020
+
+- Add renderRaw method to set render value as is.
+
+### v4.26.1 - 05-29-2020
+
+- Fix array listing and allow customer separator.
+
+### v4.26.0 - 05-29-2020
+
+- Add support for comma separated list from an array of objects.
+
 ### v4.25.1 - 04-17-2020
 
 - Fix PR [#125].

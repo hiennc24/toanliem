@@ -30,7 +30,6 @@ class TableExportHandler extends DataTablesExportHandler implements WithEvents
 
     /**
      * @param BeforeSheet $event
-     * @throws Exception
      */
     protected function beforeSheet(BeforeSheet $event)
     {

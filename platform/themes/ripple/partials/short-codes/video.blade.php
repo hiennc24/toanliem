@@ -1,3 +1,7 @@
-<div class="embed-responsive embed-responsive-16by9 mb30">
-    <iframe allowfullscreen="true" frameborder="0" height="315" src="{{ $url }}" width="420"></iframe>
-</div>
+@if (!empty($url))
+    <div class="embed-responsive embed-responsive-16by9 mb30">
+        <iframe class="embed-responsive-item" allowfullscreen frameborder="0" height="315" width="420" src="{{ str_replace('watch?v=', 'embed/', $url) }}"></iframe>
+    </div>
+@else
+    <p>{{ __('Youtube URL is invalid.') }}</p>
+@endif

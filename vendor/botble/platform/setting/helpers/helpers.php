@@ -6,8 +6,8 @@ if (!function_exists('setting')) {
     /**
      * Get the setting instance.
      *
-     * @param $key
-     * @param $default
+     * @param string|null $key
+     * @param string|null $default
      * @return array|\Botble\Setting\Supports\SettingStore|string|null
      */
     function setting($key = null, $default = null)
@@ -27,9 +27,9 @@ if (!function_exists('setting')) {
 if (!function_exists('get_setting_email_template_content')) {
     /**
      * Get content of email template if module need to config email template
-     * @param $type string type of module is system or plugins
-     * @param $module string
-     * @param $templateKey string key is config in config.email.templates.$key
+     * @param string $type type of module is system or plugins
+     * @param string $module
+     * @param string $templateKey key is config in config.email.templates.$key
      * @return bool|mixed|null
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
@@ -49,8 +49,8 @@ if (!function_exists('get_setting_email_template_content')) {
 if (!function_exists('get_setting_email_template_path')) {
     /**
      * Get user email template path in storage file
-     * @param $module string
-     * @param $templateKey string key is config in config.email.templates.$key
+     * @param string $module
+     * @param string $templateKey key is config in config.email.templates.$key
      * @return string
      */
     function get_setting_email_template_path($module, $templateKey)
@@ -62,8 +62,8 @@ if (!function_exists('get_setting_email_template_path')) {
 if (!function_exists('get_setting_email_subject_key')) {
     /**
      * get email subject key for setting() function
-     * @param $module string
-     * @param $templateKey string
+     * @param string $module
+     * @param string $templateKey
      * @return string
      */
     function get_setting_email_subject_key($type, $module, $templateKey)
@@ -75,9 +75,9 @@ if (!function_exists('get_setting_email_subject_key')) {
 if (!function_exists('get_setting_email_subject')) {
     /**
      * Get email template subject value
-     * @param $type : plugins or core
-     * @param $name : name of plugin or core component
-     * @param $mail_key : define in config/email/templates
+     * @param string $type : plugins or core
+     * @param string $name : name of plugin or core component
+     * @param string $templateKey : define in config/email/templates
      * @return array|\Botble\Setting\Supports\SettingStore|null|string
      */
     function get_setting_email_subject($type, $module, $templateKey)
@@ -93,9 +93,9 @@ if (!function_exists('get_setting_email_subject')) {
 if (!function_exists('get_setting_email_status_key')) {
     /**
      * Get email on or off status key for setting() function
-     * @param $type
-     * @param $module
-     * @param $templateKey
+     * @param string $type
+     * @param string $module
+     * @param string $templateKey
      * @return string
      */
     function get_setting_email_status_key($type, $module, $templateKey)
@@ -106,9 +106,9 @@ if (!function_exists('get_setting_email_status_key')) {
 
 if (!function_exists('get_setting_email_status')) {
     /**
-     * @param $type
-     * @param $module
-     * @param $templateKey
+     * @param string $type
+     * @param string $module
+     * @param string $templateKey
      * @return array|\Botble\Setting\Supports\SettingStore|null|string
      */
     function get_setting_email_status($type, $module, $templateKey)

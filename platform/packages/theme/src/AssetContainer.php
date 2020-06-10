@@ -280,7 +280,6 @@ class AssetContainer
      * Write a content without tag wrapper.
      *
      * @param string $name
-     * @param string string
      * @param string $source
      * @param array $dependencies
      * @return AssetContainer
@@ -334,7 +333,6 @@ class AssetContainer
      *
      * @param string $source
      * @return string
-     * @throws FileNotFoundException
      */
     protected function evaluatePath($source)
     {
@@ -376,7 +374,6 @@ class AssetContainer
      * @param array $dependencies
      * @param array $attributes
      * @return AssetContainer
-     * @throws FileNotFoundException
      */
     public function script($name, $source, $dependencies = [], $attributes = [])
     {
@@ -632,6 +629,7 @@ class AssetContainer
 
     /**
      * @param $group
+     * @return array
      * @throws Exception
      */
     public function getAssets($group)

@@ -25,4 +25,6 @@ return [
     'widget_audit_logs' => 'Activities Logs',
     'action'            => 'Action',
     'user_agent'        => 'User Agent',
+    'system'            => 'System',
+    'delete_all'        => 'Delete all records',
 ];

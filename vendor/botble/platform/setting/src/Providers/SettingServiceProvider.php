@@ -11,6 +11,7 @@ use Botble\Setting\Repositories\Eloquent\SettingRepository;
 use Botble\Setting\Repositories\Interfaces\SettingInterface;
 use Botble\Setting\Supports\SettingsManager;
 use Botble\Setting\Supports\SettingStore;
+use EmailHandler;
 use Event;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Foundation\Application;
@@ -58,7 +59,7 @@ class SettingServiceProvider extends ServiceProvider
             ->loadRoutes(['web'])
             ->loadAndPublishViews()
             ->loadAndPublishTranslations()
-            ->loadAndPublishConfigurations(['permissions'])
+            ->loadAndPublishConfigurations(['permissions', 'email'])
             ->loadMigrations()
             ->publishAssets();
 
@@ -100,6 +101,8 @@ class SettingServiceProvider extends ServiceProvider
                     'url'         => route('settings.media'),
                     'permissions' => ['settings.media'],
                 ]);
+
+            EmailHandler::addTemplateSettings('base', config('core.setting.email'), 'core');
         });
     }
 

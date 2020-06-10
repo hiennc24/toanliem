@@ -27,7 +27,6 @@ return [
         'fancybox',
     ],
     'styles'         => [
-        'bootstrap',
         'fontawesome',
         'simple-line-icons',
         'select2',
@@ -308,21 +307,13 @@ return [
                 'use_cdn'  => false,
                 'location' => 'footer',
                 'src'      => [
-                    'local' => '/vendor/core/packages/js-validation/js/js-validation.js',
+                    'local' => '/vendor/core/js/js-validation.js',
                 ],
             ],
             // End JS
         ],
         /* -- STYLESHEET ASSETS -- */
         'styles'  => [
-            'bootstrap'           => [
-                'use_cdn'    => true,
-                'location'   => 'header',
-                'src'        => [
-                    'local' => '/vendor/core/libraries/bootstrap/css/bootstrap.min.css',
-                    'cdn'   => '//stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css',
-                ],
-            ],
             'fontawesome'         => [
                 'use_cdn'    => true,
                 'location'   => 'header',

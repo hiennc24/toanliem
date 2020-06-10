@@ -200,6 +200,8 @@ class Google_Service_ServiceManagement_Resource_Services extends Google_Service_
    *
    * @opt_param string producerProjectId Include services produced by the
    * specified project.
+   * @opt_param int pageSize The max number of items to include in the response
+   * list. Page size is 50 if not specified. Maximum value is 100.
    * @opt_param string consumerId Include services consumed by the specified
    * consumer.
    *
@@ -207,8 +209,6 @@ class Google_Service_ServiceManagement_Resource_Services extends Google_Service_
    * project:
    * @opt_param string pageToken Token identifying which result to start with;
    * returned by a previous list call.
-   * @opt_param int pageSize The max number of items to include in the response
-   * list. Page size is 50 if not specified. Maximum value is 100.
    * @return Google_Service_ServiceManagement_ListServicesResponse
    */
   public function listServices($optParams = array())
@@ -221,7 +221,7 @@ class Google_Service_ServiceManagement_Resource_Services extends Google_Service_
    * Sets the access control policy on the specified resource. Replaces any
    * existing policy.
    *
-   * Can return Public Errors: NOT_FOUND, INVALID_ARGUMENT and PERMISSION_DENIED
+   * Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
    * (services.setIamPolicy)
    *
    * @param string $resource REQUIRED: The resource for which the policy is being
@@ -240,7 +240,7 @@ class Google_Service_ServiceManagement_Resource_Services extends Google_Service_
   /**
    * Returns permissions that a caller has on the specified resource. If the
    * resource does not exist, this will return an empty set of permissions, not a
-   * NOT_FOUND error.
+   * `NOT_FOUND` error.
    *
    * Note: This operation is designed to be used for building permission-aware UIs
    * and command-line tools, not for authorization checking. This operation may

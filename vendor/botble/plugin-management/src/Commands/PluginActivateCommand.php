@@ -38,6 +38,7 @@ class PluginActivateCommand extends Command
 
     /**
      * @return boolean
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function handle()
     {

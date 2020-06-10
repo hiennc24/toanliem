@@ -35,7 +35,7 @@ class Google_Service_Apigee_Resource_OrganizationsEnvironments extends Google_Se
    * @param array $optParams Optional parameters.
    *
    * @opt_param string name Optional. Name of the environment. Alternatively, the
-   * name may be specified in the request body in the environment_id field.
+   * name may be specified in the request body in the name field.
    * @return Google_Service_Apigee_GoogleLongrunningOperation
    */
   public function create($parent, Google_Service_Apigee_GoogleCloudApigeeV1Environment $postBody, $optParams = array())
@@ -71,28 +71,6 @@ class Google_Service_Apigee_Resource_OrganizationsEnvironments extends Google_Se
     $params = array('name' => $name);
     $params = array_merge($params, $optParams);
     return $this->call('get', array($params), "Google_Service_Apigee_GoogleCloudApigeeV1Environment");
-  }
-  /**
-   * Get Google Cloud Storage (GCS) signed url for specific organization and
-   * environment. Collection agent uses this signed url to upload data to GCS
-   * bucket. (environments.getDatalocation)
-   *
-   * @param string $name Required. The parent organization and environment names.
-   * Must be of the form `organizations/{org}/environments/{env}/datalocation`.
-   * @param array $optParams Optional parameters.
-   *
-   * @opt_param string repo Required. Repository name
-   * @opt_param string relativeFilePath Required. Relative path to the GCS bucket
-   * @opt_param string contentType Content-Type for uploaded file.
-   * @opt_param string dataset Required. Dataset could be one of `api`, `mint`,
-   * `trace` and `event`
-   * @return Google_Service_Apigee_GoogleCloudApigeeV1DataLocation
-   */
-  public function getDatalocation($name, $optParams = array())
-  {
-    $params = array('name' => $name);
-    $params = array_merge($params, $optParams);
-    return $this->call('getDatalocation', array($params), "Google_Service_Apigee_GoogleCloudApigeeV1DataLocation");
   }
   /**
    * Gets the debug mask singleton resource for an environment.
@@ -148,6 +126,10 @@ class Google_Service_Apigee_Resource_OrganizationsEnvironments extends Google_Se
    * Requests for policies with any conditional bindings must specify version 3.
    * Policies without any conditional bindings may specify any valid value or
    * leave the field unset.
+   *
+   * To learn which resources support conditions in their IAM policies, see the
+   * [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-
+   * policies).
    * @return Google_Service_Apigee_GoogleIamV1Policy
    */
   public function getIamPolicy($resource, $optParams = array())

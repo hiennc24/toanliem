@@ -4,6 +4,7 @@ namespace Botble\Media\Providers;
 
 use Botble\Base\Supports\Helper;
 use Botble\Base\Traits\LoadAndPublishDataTrait;
+use Botble\Media\Commands\ClearChunksCommand;
 use Botble\Media\Commands\DeleteThumbnailCommand;
 use Botble\Media\Commands\GenerateThumbnailCommand;
 use Botble\Media\Facades\RvMediaFacade;
@@ -19,10 +20,13 @@ use Botble\Media\Repositories\Eloquent\MediaSettingRepository;
 use Botble\Media\Repositories\Interfaces\MediaFileInterface;
 use Botble\Media\Repositories\Interfaces\MediaFolderInterface;
 use Botble\Media\Repositories\Interfaces\MediaSettingInterface;
+use Botble\Setting\Supports\SettingStore;
 use Event;
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Routing\Events\RouteMatched;
 use Illuminate\Support\ServiceProvider;
+use Botble\Media\Chunks\Storage\ChunkStorage;
 
 /**
  * @since 02/07/2016 09:50 AM
@@ -68,6 +72,18 @@ class MediaServiceProvider extends ServiceProvider
             ->loadRoutes()
             ->publishAssets();
 
+        $config = $this->app->make('config');
+        $setting = $this->app->make(SettingStore::class);
+
+        $config->set([
+            'core.media.media.chunk.enabled'    => (bool)$setting->get('media_chunk_enabled',
+                $config->get('core.media.media.chunk.enabled')),
+            'core.media.media.chunk.chunk_size' => (int)$setting->get('media_chunk_size',
+                $config->get('core.media.media.chunk.chunk_size')),
+            'core.media.media.chunk.max_file_size' => (int)$setting->get('media_max_file_size',
+                $config->get('core.media.media.chunk.max_file_size')),
+        ]);
+
         Event::listen(RouteMatched::class, function () {
             dashboard_menu()->registerItem([
                 'id'          => 'cms-core-media',
@@ -83,6 +99,20 @@ class MediaServiceProvider extends ServiceProvider
         $this->commands([
             GenerateThumbnailCommand::class,
             DeleteThumbnailCommand::class,
+            ClearChunksCommand::class,
         ]);
+
+        $this->app->booted(function () {
+            if (config('core.media.media.chunk.clear.schedule.enabled')) {
+                $schedule = $this->app->make(Schedule::class);
+
+                $schedule->command('cms:media:chunks:clear')
+                    ->cron(config('core.media.media.chunk.clear.schedule.cron'));
+            }
+        });
+
+        $this->app->singleton(ChunkStorage::class, function () {
+            return new ChunkStorage;
+        });
     }
 }

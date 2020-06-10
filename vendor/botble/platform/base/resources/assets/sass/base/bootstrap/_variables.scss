@@ -202,13 +202,6 @@ $input-border-focus: #66afe9 !default;
 //** Placeholder text color
 $input-color-placeholder: #999999 !default;
 
-//** Default `.form-control` height
-$input-height-base: ($line-height-computed + ($padding-base-vertical * 2) + 2) !default;
-//** Large `.form-control` height
-$input-height-large: (ceil($font-size-large * $line-height-large) + ($padding-large-vertical * 2) + 2) !default;
-//** Small `.form-control` height
-$input-height-small: (floor($font-size-small * $line-height-small) + ($padding-small-vertical * 2) + 2) !default;
-
 //** `.form-group` margin
 $form-group-margin-bottom: 15px !default;
 
@@ -352,7 +345,6 @@ $navbar-height: 50px !default;
 $navbar-margin-bottom: $line-height-computed !default;
 $navbar-border-radius: $border-radius-base !default;
 $navbar-padding-horizontal: floor(($grid-gutter-width / 2)) !default;
-$navbar-padding-vertical: (($navbar-height - $line-height-computed) / 2) !default;
 $navbar-collapse-max-height: 340px !default;
 
 $navbar-default-color: #777777 !default;

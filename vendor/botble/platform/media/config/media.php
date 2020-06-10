@@ -1,10 +1,10 @@
 <?php
 
 return [
-    'sizes'                   => [
+    'sizes'              => [
         'thumb' => '150x150',
     ],
-    'permissions'             => [
+    'permissions'        => [
         'folders.create',
         'folders.edit',
         'folders.trash',
@@ -16,7 +16,7 @@ return [
         'files.favorite',
         'folders.favorite',
     ],
-    'libraries'               => [
+    'libraries'          => [
         'stylesheets' => [
             'vendor/core/media/libraries/jquery-context-menu/jquery.contextMenu.min.css',
             'vendor/core/media/css/media.css?v=' . time(),
@@ -30,9 +30,9 @@ return [
             'vendor/core/media/js/media.js?v=' . time(),
         ],
     ],
-    'allowed_mime_types'      => env('RV_MEDIA_ALLOWED_MIME_TYPES',
+    'allowed_mime_types' => env('RV_MEDIA_ALLOWED_MIME_TYPES',
         'jpg,jpeg,png,gif,txt,docx,zip,mp3,bmp,csv,xls,xlsx,ppt,pptx,pdf,mp4,doc,mpga,wav'),
-    'mime_types'              => [
+    'mime_types'         => [
         'image'    => [
             'image/png',
             'image/jpeg',
@@ -56,12 +56,48 @@ return [
             'application/vnd.openxmlformats-officedocument.presentationml.presentation',
         ],
     ],
-    'default_image'           => env('RV_MEDIA_DEFAULT_IMAGE', '/vendor/core/images/placeholder.png'),
-    'sidebar_display'         => env('RV_MEDIA_SIDEBAR_DISPLAY', 'horizontal'), // Use "vertical" or "horizontal"
-    'watermark'               => [
+    'default_image'      => env('RV_MEDIA_DEFAULT_IMAGE', '/vendor/core/images/placeholder.png'),
+    'sidebar_display'    => env('RV_MEDIA_SIDEBAR_DISPLAY', 'horizontal'), // Use "vertical" or "horizontal"
+    'watermark'          => [
         'source'   => env('RV_MEDIA_WATERMARK_SOURCE'),
         'position' => env('RV_MEDIA_WATERMARK_POSITION', 'bottom-right'),
         'x'        => env('RV_MEDIA_WATERMARK_X', 10),
         'y'        => env('RV_MEDIA_WATERMARK_Y', 10),
+    ],
+
+    'chunk' => [
+        'enabled'       => env('RV_MEDIA_UPLOAD_CHUNK', false),
+        'chunk_size'    => 1 * 1024 * 1024, // Bytes
+        'max_file_size' => 1024 * 1024, // MB
+
+        /*
+         * The storage config
+         */
+        'storage'       => [
+            /*
+             * Returns the folder name of the chunks. The location is in storage/app/{folder_name}
+             */
+            'chunks' => 'chunks',
+            'disk'   => 'local',
+        ],
+        'clear'         => [
+            /*
+             * How old chunks we should delete
+             */
+            'timestamp' => '-3 HOURS',
+            'schedule'  => [
+                'enabled' => true,
+                'cron'    => '25 * * * *', // run every hour on the 25th minute
+            ],
+        ],
+        'chunk'         => [
+            // setup for the chunk naming setup to ensure same name upload at same time
+            'name' => [
+                'use' => [
+                    'session' => true, // should the chunk name use the session id? The uploader must send cookie!,
+                    'browser' => false, // instead of session we can use the ip and browser?
+                ],
+            ],
+        ],
     ],
 ];

@@ -5,3 +5,6 @@
 # Available API
 
 - See the list in `http://your-domain.com/docs`
+
+# Generate API docs
+- php artisan scribe:generate

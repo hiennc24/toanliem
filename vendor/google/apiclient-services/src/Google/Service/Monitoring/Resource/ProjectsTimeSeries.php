@@ -127,8 +127,8 @@ class Google_Service_Monitoring_Resource_ProjectsTimeSeries extends Google_Servi
     return $this->call('list', array($params), "Google_Service_Monitoring_ListTimeSeriesResponse");
   }
   /**
-   * Queries time series using the time series query language. This method does
-   * not require a Workspace. (timeSeries.query)
+   * Queries time series using Monitoring Query Language. This method does not
+   * require a Workspace. (timeSeries.query)
    *
    * @param string $name Required. The project on which to execute the request.
    * The format is: projects/[PROJECT_ID_OR_NUMBER]

@@ -53,6 +53,7 @@ class TagController extends BaseController
     }
 
     /**
+     * @param FormBuilder $formBuilder
      * @return string
      */
     public function create(FormBuilder $formBuilder)

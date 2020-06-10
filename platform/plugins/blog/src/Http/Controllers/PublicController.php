@@ -45,7 +45,6 @@ class PublicController extends Controller
      * @param Request $request
      * @param PostInterface $postRepository
      * @return Response
-     * @throws FileNotFoundException
      */
     public function getSearch(Request $request, PostInterface $postRepository)
     {

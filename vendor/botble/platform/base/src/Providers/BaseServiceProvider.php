@@ -69,8 +69,8 @@ class BaseServiceProvider extends ServiceProvider
                 ->get('media_aws_default_region', $config->get('filesystems.disks.s3.region')),
             'filesystems.disks.s3.bucket'      => $setting
                 ->get('media_aws_bucket', $config->get('filesystems.disks.s3.bucket')),
-            'filesystems.disks.s3.endpoint'    => $setting
-                ->get('media_aws_url', $config->get('filesystems.disks.s3.endpoint')),
+            'filesystems.disks.s3.url'         => $setting
+                ->get('media_aws_url', $config->get('filesystems.disks.s3.url')),
             'app.debug_blacklist'              => [
                 '_ENV'    => [
                     'APP_KEY',

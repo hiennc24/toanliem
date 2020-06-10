@@ -4,7 +4,6 @@ namespace Botble\Setting\Http\Controllers;
 
 use Assets;
 use Botble\Base\Supports\Core;
-use Botble\Base\Supports\EmailHandler;
 use Botble\Setting\Http\Requests\EmailTemplateRequest;
 use Botble\Setting\Http\Requests\LicenseSettingRequest;
 use Botble\Setting\Http\Requests\MediaSettingRequest;
@@ -12,6 +11,7 @@ use Botble\Setting\Http\Requests\SendTestEmailRequest;
 use Botble\Setting\Repositories\Interfaces\SettingInterface;
 use Botble\Setting\Supports\SettingStore;
 use Carbon\Carbon;
+use EmailHandler;
 use Exception;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Contracts\View\Factory;
@@ -110,16 +110,16 @@ class SettingController extends BaseController
 
     /**
      * @param string $type
-     * @param string $name
+     * @param string $module
      * @param string $template
      * @param Request $request
      * @param BaseHttpResponse $response
      * @return Factory|View
      * @throws FileNotFoundException
      */
-    public function getEditEmailTemplate($type, $name, $template)
+    public function getEditEmailTemplate($type, $module, $template)
     {
-        $title = trans(config($type . '.' . $name . '.email.templates.' . $template . '.title', ''));
+        $title = trans(config($type . '.' . $module . '.email.templates.' . $template . '.title', ''));
         page_title()->setTitle($title);
 
         Assets::addStylesDirectly([
@@ -137,11 +137,11 @@ class SettingController extends BaseController
             ]);
 
 
-        $emailContent = get_setting_email_template_content($type, $name, $template);
-        $emailSubject = get_setting_email_subject($type, $name, $template);
+        $emailContent = get_setting_email_template_content($type, $module, $template);
+        $emailSubject = get_setting_email_subject($type, $module, $template);
         $pluginData = [
             'type'          => $type,
-            'name'          => $name,
+            'name'          => $module,
             'template_file' => $template,
         ];
 
@@ -197,17 +197,13 @@ class SettingController extends BaseController
     /**
      * @param BaseHttpResponse $response
      * @param SendTestEmailRequest $request
-     * @param EmailHandler $emailHandler
      * @return BaseHttpResponse
      * @throws Throwable
      */
-    public function postSendTestEmail(
-        BaseHttpResponse $response,
-        SendTestEmailRequest $request,
-        EmailHandler $emailHandler
-    ) {
+    public function postSendTestEmail(BaseHttpResponse $response, SendTestEmailRequest $request)
+    {
         try {
-            $emailHandler->send(
+            EmailHandler::send(
                 file_get_contents(core_path('setting/resources/email-templates/test.tpl')),
                 __('Test title'),
                 $request->input('email'),

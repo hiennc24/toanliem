@@ -83,6 +83,7 @@ class Helper
 
     /**
      * @param string $module
+     * @param string $type
      * @return boolean
      */
     public static function removeModuleFiles(string $module, $type = 'packages'): bool

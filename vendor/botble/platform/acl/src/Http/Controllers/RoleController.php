@@ -56,8 +56,8 @@ class RoleController extends BaseController
 
     /**
      * @param int $id
+     * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     * @throws Exception
      */
     public function destroy($id, BaseHttpResponse $response)
     {
@@ -161,6 +161,7 @@ class RoleController extends BaseController
     }
 
     /**
+     * @param FormBuilder $formBuilder
      * @return string
      */
     public function create(FormBuilder $formBuilder)

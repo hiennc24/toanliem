@@ -129,10 +129,10 @@ class GalleryController extends BaseController
             event(new DeletedContentEvent(GALLERY_MODULE_SCREEN_NAME, $request, $gallery));
 
             return $response->setMessage(trans('core/base::notices.delete_success_message'));
-        } catch (Exception $ex) {
+        } catch (Exception $exception) {
             return $response
                 ->setError()
-                ->setMessage(trans('core/base::notices.cannot_delete'));
+                ->setMessage($exception->getMessage());
         }
     }
 

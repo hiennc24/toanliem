@@ -55,12 +55,42 @@
                             <input type="text" class="next-input" name="media_aws_bucket" id="media_aws_bucket"
                                    value="{{ config('filesystems.disks.s3.bucket') }}" placeholder="Ex: botble">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" style="margin-bottom: 1rem;">
                             <label class="text-title-field"
                                    for="media_aws_url">{{ trans('core/setting::setting.media.aws_url') }}</label>
                             <input type="text" class="next-input" name="media_aws_url" id="media_aws_url"
-                                   value="{{ config('filesystems.disks.s3.endpoint') }}" placeholder="Ex: https://s3-ap-southeast-1.amazonaws.com/botble">
+                                   value="{{ config('filesystems.disks.s3.url') }}" placeholder="Ex: https://s3-ap-southeast-1.amazonaws.com/botble">
                         </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="text-title-field"
+                               for="media_chunk_enabled">{{ trans('core/setting::setting.media.enable_chunk') }}
+                        </label>
+                        <label class="hrv-label">
+                            <input type="radio" name="media_chunk_enabled" class="hrv-radio"
+                                   value="1"
+                                   @if (setting('media_chunk_enabled', config('core.media.media.chunk.enabled'))) checked @endif>{{ trans('core/setting::setting.general.yes') }}
+                        </label>
+                        <label class="hrv-label">
+                            <input type="radio" name="media_chunk_enabled" class="hrv-radio"
+                                   value="0"
+                                   @if (!setting('media_chunk_enabled', config('core.media.media.chunk.enabled'))) checked @endif>{{ trans('core/setting::setting.general.no') }}
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="text-title-field"
+                               for="media_chunk_size">{{ trans('core/setting::setting.media.chunk_size') }}</label>
+                        <input type="number" class="next-input" name="media_chunk_size" id="media_chunk_size"
+                               value="{{ setting('media_chunk_size', config('core.media.media.chunk.chunk_size')) }}" placeholder="{{ trans('core/setting::setting.media.chunk_size_placeholder') }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="text-title-field"
+                               for="media_max_file_size">{{ trans('core/setting::setting.media.max_file_size') }}</label>
+                        <input type="number" class="next-input" name="media_max_file_size" id="media_max_file_size"
+                               value="{{ setting('media_max_file_size', config('core.media.media.chunk.max_file_size')) }}" placeholder="{{ trans('core/setting::setting.media.max_file_size_placeholder') }}">
                     </div>
 
                 </div>

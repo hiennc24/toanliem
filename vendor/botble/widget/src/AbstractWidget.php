@@ -131,7 +131,7 @@ abstract class AbstractWidget
     }
 
     /**
-     * @param null $sidebarId
+     * @param string|null $sidebarId
      * @param int $position
      * @return Factory|View|mixed
      * @throws FileNotFoundException

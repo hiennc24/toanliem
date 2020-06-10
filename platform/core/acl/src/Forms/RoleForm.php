@@ -131,7 +131,7 @@ class RoleForm extends FormAbstract
      * @param array $allFlags
      * @return mixed
      */
-    protected function getChildren($parentId, $allFlags)
+    protected function getChildren($parentId, array $allFlags)
     {
         $newFlagArray = [];
         foreach ($allFlags as $flagDetails) {

@@ -101,10 +101,10 @@ class WidgetController extends BaseController
             return $response
                 ->setData(view('packages/widget::item', compact('widget_areas'))->render())
                 ->setMessage(trans('packages/widget::global.save_success'));
-        } catch (Exception $ex) {
+        } catch (Exception $exception) {
             return $response
                 ->setError()
-                ->setMessage($ex->getMessage());
+                ->setMessage($exception->getMessage());
         }
     }
 

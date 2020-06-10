@@ -24,6 +24,7 @@ class BreadcrumbsGenerator
      * @param string $name
      * @param array $params
      * @return Collection
+     * @throws Exception
      */
     public function generate(array $callbacks, array $before, array $after, string $name, array $params): Collection
     {

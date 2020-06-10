@@ -1,16 +1,19 @@
 import LicenseComponent from './components/LicenseComponent'
 
-window.Vue = require('vue');
+if (document.getElementById('main-settings')) {
 
-Vue.component('license-component', LicenseComponent);
+    window.Vue = require('vue');
 
-new Vue({
-    el: '#main-settings',
-});
+    Vue.component('license-component', LicenseComponent);
+
+    new Vue({
+        el: '#main-settings',
+    });
+}
 
 class SettingManagement {
     init() {
-        $('input[data-key=email-config-status-btn]').on('change', event =>  {
+        $('input[data-key=email-config-status-btn]').on('change', event => {
             let _self = $(event.currentTarget);
             let key = _self.prop('id');
             let url = _self.data('change-url');
@@ -22,20 +25,20 @@ class SettingManagement {
                     key: key,
                     value: _self.prop('checked') ? 1 : 0
                 },
-                success: res =>  {
+                success: res => {
                     if (!res.error) {
                         Botble.showSuccess(res.message);
                     } else {
                         Botble.showError(res.message);
                     }
                 },
-                error: res =>  {
+                error: res => {
                     Botble.handleError(res);
                 }
             });
         });
 
-        $(document).on('change', '#email_driver', event =>  {
+        $(document).on('change', '#email_driver', event => {
             if ($(event.currentTarget).val() === 'mailgun') {
                 $('.setting-mail-password').addClass('hidden');
                 $('.setting-mail-mail-gun').removeClass('hidden');
@@ -51,7 +54,7 @@ class SettingManagement {
             }
         });
 
-        $('#send-test-email-btn').on('click', event =>  {
+        $('#send-test-email-btn').on('click', event => {
             event.preventDefault();
             let _self = $(event.currentTarget);
 
@@ -63,7 +66,7 @@ class SettingManagement {
                 data: {
                     email: _self.closest('.modal-content').find('input[name=email]').val()
                 },
-                success: res =>  {
+                success: res => {
                     if (!res.error) {
                         Botble.showSuccess(res.message);
                     } else {
@@ -72,7 +75,7 @@ class SettingManagement {
                     _self.removeClass('button-loading');
                     _self.closest('.modal').modal('hide');
                 },
-                error: res =>  {
+                error: res => {
                     Botble.handleError(res);
                     _self.removeClass('button-loading');
                     _self.closest('.modal').modal('hide');
@@ -84,13 +87,13 @@ class SettingManagement {
             Botble.initCodeEditor('mail-template-editor');
         }
 
-        $(document).on('click', '.btn-trigger-reset-to-default', event =>  {
+        $(document).on('click', '.btn-trigger-reset-to-default', event => {
             event.preventDefault();
             $('#reset-template-to-default-button').data('target', $(event.currentTarget).data('target'));
             $('#reset-template-to-default-modal').modal('show');
         });
 
-        $(document).on('click', '#reset-template-to-default-button', event =>  {
+        $(document).on('click', '#reset-template-to-default-button', event => {
             event.preventDefault();
             let _self = $(event.currentTarget);
 
@@ -104,7 +107,7 @@ class SettingManagement {
                     email_subject_key: $('input[name=email_subject_key]').val(),
                     template_path: $('input[name=template_path]').val(),
                 },
-                success: res =>  {
+                success: res => {
                     if (!res.error) {
                         Botble.showSuccess(res.message);
                         setTimeout(() => {
@@ -116,7 +119,7 @@ class SettingManagement {
                     _self.removeClass('button-loading');
                     $('#reset-template-to-default-modal').modal('hide');
                 },
-                error: res =>  {
+                error: res => {
                     Botble.handleError(res);
                     _self.removeClass('button-loading');
                 }

@@ -2,8 +2,6 @@
 
 namespace Botble\Theme;
 
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
-
 class Manager
 {
     /**
@@ -13,7 +11,6 @@ class Manager
 
     /**
      * Construct the class
-     * @throws FileNotFoundException
      */
     public function __construct()
     {
@@ -22,8 +19,6 @@ class Manager
 
     /**
      * @return array
-     *
-     * @throws FileNotFoundException
      */
     public function getAllThemes(): array
     {

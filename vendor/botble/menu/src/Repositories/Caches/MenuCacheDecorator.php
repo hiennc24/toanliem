@@ -11,7 +11,7 @@ class MenuCacheDecorator extends CacheAbstractDecorator implements MenuInterface
     /**
      * {@inheritDoc}
      */
-    public function findBySlug($slug, $active, $selects = [])
+    public function findBySlug($slug, $active, array $selects = [])
     {
         return $this->getDataIfExistCache(__FUNCTION__, func_get_args());
     }

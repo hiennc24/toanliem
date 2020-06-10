@@ -391,6 +391,7 @@ abstract class FormAbstract extends Form
     /**
      * Setup model for form, add namespace if needed for child forms.
      *
+     * @param string $model
      * @return $this
      */
     protected function setupModel($model)

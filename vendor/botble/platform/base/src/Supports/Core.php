@@ -119,9 +119,8 @@ class Core
             $this->apiUrl . 'api/check_connection_ext',
             json_encode($dataArray)
         );
-        $response = json_decode($getData, true);
 
-        return $response;
+        return json_decode($getData, true);
     }
 
     /**
@@ -227,14 +226,14 @@ class Core
         $dataArray = [
             'product_id' => $this->productId,
         ];
+
         $getData = $this->callApi(
             'POST',
             $this->apiUrl . 'api/latest_version',
             json_encode($dataArray)
         );
-        $response = json_decode($getData, true);
 
-        return $response;
+        return json_decode($getData, true);
     }
 
     /**
@@ -339,6 +338,7 @@ class Core
             );
             $res = json_decode($getData, true);
         }
+
         return $res;
     }
 

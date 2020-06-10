@@ -12,7 +12,7 @@ class MenuRepository extends RepositoriesAbstract implements MenuInterface
     /**
      * {@inheritDoc}
      */
-    public function findBySlug($slug, $active, $selects = [])
+    public function findBySlug($slug, $active, array $selects = [])
     {
         $data = $this->model->where('menus.slug', $slug);
         if ($active) {

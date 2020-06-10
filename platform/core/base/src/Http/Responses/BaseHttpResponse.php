@@ -52,7 +52,7 @@ class BaseHttpResponse implements Responsable
     protected $code = 200;
 
     /**
-     * @param $data
+     * @param mixed $data
      * @return BaseHttpResponse
      */
     public function setData($data): self
@@ -110,7 +110,7 @@ class BaseHttpResponse implements Responsable
     }
 
     /**
-     * @param $message
+     * @param string $message
      * @return BaseHttpResponse
      */
     public function setMessage($message): self
@@ -128,7 +128,7 @@ class BaseHttpResponse implements Responsable
     }
 
     /**
-     * @param $error
+     * @param bool $error
      * @return BaseHttpResponse
      */
     public function setError(bool $error = true): self

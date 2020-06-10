@@ -116,7 +116,6 @@ class ThemeService
     /**
      * @param string $theme
      * @return array
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     protected function validate(string $theme): array
     {
@@ -224,7 +223,6 @@ class ThemeService
     /**
      * @param string $theme
      * @return array
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function removeAssets(string $theme): array
     {

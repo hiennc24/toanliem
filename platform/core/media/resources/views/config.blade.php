@@ -9,5 +9,6 @@
             'in_process_get_media' => false,
             'has_more' =>  true,
         ],
+        'chunk' => config('core.media.media.chunk'),
     ]) !!}
 </script>

@@ -59,9 +59,9 @@ class Gallery
     }
 
     /**
-     * @param string $screen
      * @param \Illuminate\Http\Request $request
      * @param \Eloquent|false $data
+     * @throws \Exception
      */
     public function saveGallery($request, $data)
     {
@@ -88,8 +88,9 @@ class Gallery
     }
 
     /**
-     * @param string $screen
      * @param \Eloquent|false $data
+     * @return bool
+     * @throws \Exception
      */
     public function deleteGallery($data)
     {

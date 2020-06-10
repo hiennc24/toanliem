@@ -26,6 +26,22 @@
 class Google_Service_DisplayVideo_Resource_AdvertisersLocationLists extends Google_Service_Resource
 {
   /**
+   * Creates a new location list. Returns the newly created location list if
+   * successful. (locationLists.create)
+   *
+   * @param string $advertiserId Required. The ID of the DV360 advertiser to which
+   * the location list belongs.
+   * @param Google_Service_DisplayVideo_LocationList $postBody
+   * @param array $optParams Optional parameters.
+   * @return Google_Service_DisplayVideo_LocationList
+   */
+  public function create($advertiserId, Google_Service_DisplayVideo_LocationList $postBody, $optParams = array())
+  {
+    $params = array('advertiserId' => $advertiserId, 'postBody' => $postBody);
+    $params = array_merge($params, $optParams);
+    return $this->call('create', array($params), "Google_Service_DisplayVideo_LocationList");
+  }
+  /**
    * Gets a location list. (locationLists.get)
    *
    * @param string $advertiserId Required. The ID of the DV360 advertiser to which
@@ -48,9 +64,6 @@ class Google_Service_DisplayVideo_Resource_AdvertisersLocationLists extends Goog
    * the fetched location lists belong.
    * @param array $optParams Optional parameters.
    *
-   * @opt_param int pageSize Requested page size. Must be between `1` and `100`.
-   * Defaults to `100` if not set. Returns error code `INVALID_ARGUMENT` if an
-   * invalid value is specified.
    * @opt_param string filter Allows filtering by location list fields.
    *
    * Supported syntax:
@@ -80,6 +93,9 @@ class Google_Service_DisplayVideo_Resource_AdvertisersLocationLists extends Goog
    * The default sorting order is ascending. To specify descending order for a
    * field, a suffix "desc" should be added to the field name. Example:
    * `displayName desc`.
+   * @opt_param int pageSize Requested page size. Must be between `1` and `100`.
+   * Defaults to `100` if not set. Returns error code `INVALID_ARGUMENT` if an
+   * invalid value is specified.
    * @return Google_Service_DisplayVideo_ListLocationListsResponse
    */
   public function listAdvertisersLocationLists($advertiserId, $optParams = array())
@@ -87,5 +103,26 @@ class Google_Service_DisplayVideo_Resource_AdvertisersLocationLists extends Goog
     $params = array('advertiserId' => $advertiserId);
     $params = array_merge($params, $optParams);
     return $this->call('list', array($params), "Google_Service_DisplayVideo_ListLocationListsResponse");
+  }
+  /**
+   * Updates a location list. Returns the updated location list if successful.
+   * (locationLists.patch)
+   *
+   * @param string $advertiserId Required. The ID of the DV360 advertiser to which
+   * the location lists belongs.
+   * @param string $locationListId Output only. The unique ID of the location
+   * list. Assigned by the system.
+   * @param Google_Service_DisplayVideo_LocationList $postBody
+   * @param array $optParams Optional parameters.
+   *
+   * @opt_param string updateMask Required. The mask to control which fields to
+   * update.
+   * @return Google_Service_DisplayVideo_LocationList
+   */
+  public function patch($advertiserId, $locationListId, Google_Service_DisplayVideo_LocationList $postBody, $optParams = array())
+  {
+    $params = array('advertiserId' => $advertiserId, 'locationListId' => $locationListId, 'postBody' => $postBody);
+    $params = array_merge($params, $optParams);
+    return $this->call('patch', array($params), "Google_Service_DisplayVideo_LocationList");
   }
 }

@@ -5,7 +5,6 @@ namespace Botble\Contact\Http\Controllers;
 use Botble\Base\Forms\FormBuilder;
 use Botble\Base\Http\Controllers\BaseController;
 use Botble\Base\Http\Responses\BaseHttpResponse;
-use Botble\Base\Supports\EmailHandler;
 use Botble\Base\Traits\HasDeleteManyItemsTrait;
 use Botble\Contact\Enums\ContactStatusEnum;
 use Botble\Contact\Forms\ContactForm;
@@ -15,6 +14,7 @@ use Botble\Contact\Repositories\Interfaces\ContactReplyInterface;
 use Botble\Contact\Tables\ContactTable;
 use Botble\Contact\Repositories\Interfaces\ContactInterface;
 use Botble\Setting\Supports\SettingStore;
+use EmailHandler;
 use Exception;
 use Illuminate\Http\Request;
 use Botble\Base\Events\DeletedContentEvent;
@@ -102,7 +102,7 @@ class ContactController extends BaseController
         } catch (Exception $exception) {
             return $response
                 ->setError()
-                ->setMessage(trans('core/base::notices.cannot_delete'));
+                ->setMessage($exception->getMessage());
         }
     }
 
@@ -118,22 +118,21 @@ class ContactController extends BaseController
     }
 
     /**
-     * @param ContactReplyRequest $request
      * @param $id
-     * @param SettingStore $setting
-     * @param EmailHandler $emailHandler
-     * @throws \Throwable
+     * @param ContactReplyRequest $request
+     * @param BaseHttpResponse $response
+     * @param ContactReplyInterface $contactReplyRepository
+     * @return BaseHttpResponse
      */
     public function postReply(
         $id,
         ContactReplyRequest $request,
-        EmailHandler $emailHandler,
         BaseHttpResponse $response,
         ContactReplyInterface $contactReplyRepository
     ) {
         $contact = $this->contactRepository->findOrFail($id);
 
-        $emailHandler->send($request->input('message'), 'Re: ' . $contact->subject, $contact->email);
+        EmailHandler::send($request->input('message'), 'Re: ' . $contact->subject, $contact->email);
 
         $contactReplyRepository->create([
             'message'    => $request->input('message'),

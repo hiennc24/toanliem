@@ -20,4 +20,9 @@ return [
         'flag'        => 'languages.destroy',
         'parent_flag' => 'languages.index',
     ],
+    [
+        'name'        => 'Theme translations',
+        'flag'        => 'languages.theme-translations',
+        'parent_flag' => 'languages.index',
+    ],
 ];

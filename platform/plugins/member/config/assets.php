@@ -115,7 +115,7 @@ return [
                 'use_cdn'  => false,
                 'location' => 'footer',
                 'src'      => [
-                    'local' => '/vendor/core/packages/js-validation/js/js-validation.js',
+                    'local' => '/vendor/core/js/js-validation.js',
                 ],
             ],
             // End JS

@@ -36,11 +36,11 @@ class SendMailListener
     {
         try {
             $this->mailer->to($event->to)->send(new EmailAbstract($event->content, $event->title, $event->args));
-        } catch (Exception $ex) {
+        } catch (Exception $exception) {
             if ($event->debug) {
-                throw $ex;
+                throw $exception;
             }
-            Log::error($ex->getMessage());
+            Log::error($exception->getMessage());
         }
     }
 }

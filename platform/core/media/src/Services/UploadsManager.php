@@ -3,8 +3,11 @@
 namespace Botble\Media\Services;
 
 use Carbon\Carbon;
+use Exception;
 use File;
+use Illuminate\Http\UploadedFile;
 use Mimey\MimeTypes;
+use RvMedia;
 use Storage;
 
 class UploadsManager
@@ -48,7 +51,7 @@ class UploadsManager
      */
     public function fileMimeType($path): ?string
     {
-        return $this->mimeType->getMimeType(File::extension(Storage::path($path)));
+        return $this->mimeType->getMimeType(File::extension(RvMedia::getRealPath($path)));
     }
 
     /**
@@ -132,12 +135,29 @@ class UploadsManager
     /**
      * @param string $path
      * @param string $content
+     * @param UploadedFile|null $file
      * @return bool
+     * @throws \Illuminate\Contracts\Filesystem\FileExistsException
+     * @throws \League\Flysystem\FileNotFoundException
      */
-    public function saveFile($path, $content)
+    public function saveFile($path, $content, UploadedFile $file = null)
     {
-        $path = $this->cleanFolder($path);
+        if (!config('core.media.media.chunk.enabled') || !$file) {
+            return Storage::put($this->cleanFolder($path), $content);
+        }
 
-        return Storage::put($path, $content);
+        $currentChunksPath = config('core.media.media.chunk.storage.chunks') . '/' . $file->getFilename();
+        $disk = Storage::disk(config('core.media.media.chunk.storage.disk'));
+
+        try {
+            $stream = $disk->getDriver()->readStream($currentChunksPath);
+            if ($result = Storage::writeStream($path, $stream)) {
+                $disk->delete($currentChunksPath);
+            }
+        } catch (Exception $exception) {
+            return Storage::put($this->cleanFolder($path), $content);
+        }
+
+        return $result;
     }
 }

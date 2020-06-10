@@ -12,12 +12,12 @@
                         {!! clean(trans('core/setting::setting.email.description')) !!}
                     </p>
                     <div class="available-variable">
-                        @foreach(MailVariable::getVariables('core') as $coreKey => $coreVariable)
+                        @foreach(EmailHandler::getVariables('core') as $coreKey => $coreVariable)
                             <p><code>{{ $coreKey }}</code>: {{ $coreVariable }}</p>
                         @endforeach
-                            @foreach(MailVariable::getVariables($pluginData['name']) as $moduleKey => $moduleVariable)
-                                <p><code>{{ $moduleKey }}</code>: {{ $moduleVariable }}</p>
-                            @endforeach
+                        @foreach(EmailHandler::getVariables($pluginData['name']) as $moduleKey => $moduleVariable)
+                            <p><code>{{ $moduleKey }}</code>: {{ trans($moduleVariable) }}</p>
+                        @endforeach
                     </div>
                 </div>
             </div>

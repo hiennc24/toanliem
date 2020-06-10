@@ -1,3 +1,4 @@
+@if (is_plugin_active('blog'))
 <section class="section pt-50 pb-50 bg-lightgray">
     <div class="container">
         <div class="row">
@@ -56,3 +57,4 @@
         </div>
     </div>
 </section>
+@endif

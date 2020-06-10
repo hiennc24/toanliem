@@ -142,10 +142,10 @@ class CategoryController extends BaseController
             }
 
             return $response->setMessage(trans('core/base::notices.delete_success_message'));
-        } catch (Exception $ex) {
+        } catch (Exception $exception) {
             return $response
                 ->setError()
-                ->setMessage(trans('core/base::notices.cannot_delete'));
+                ->setMessage($exception->getMessage());
         }
     }
 

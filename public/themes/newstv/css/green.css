@@ -781,8 +781,8 @@ fieldset[disabled] .btn-primary-outline.focus {
 }
 
 .nav-top {
-    background-color: #032140;
-    color: #ffffff;
+  background-color: #f5f5f5;
+  color: #666666;
 }
 
 @media (min-width: 768px) {
@@ -946,6 +946,11 @@ fieldset[disabled] .btn-primary-outline.focus {
 
 .slick-dots li.slick-active button {
   background-color: #4ddab7;
+}
+
+.header-content {
+  background-image: url("../../images/themes/green/header-bg.png");
+  background-size: cover;
 }
 
 .footer-end .container {

@@ -118,11 +118,11 @@ class Avatar
     }
 
     /**
-     * @param $array
-     * @param $default
+     * @param array $array
+     * @param string $default
      * @return mixed
      */
-    protected function getRandomElement($array, $default)
+    protected function getRandomElement(array $array, $default)
     {
         // Make it work for associative array
         $array = array_values($array);
@@ -191,6 +191,7 @@ class Avatar
             'borderSize',
             'borderColor',
         ];
+
         foreach ($attributes as $attr) {
             $keys[] = $this->$attr;
         }

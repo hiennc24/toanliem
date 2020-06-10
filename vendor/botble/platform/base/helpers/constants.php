@@ -126,6 +126,14 @@ if (!defined('BASE_FILTER_EMAIL_TEMPLATE')) {
     define('BASE_FILTER_EMAIL_TEMPLATE', 'base_filter_email_template');
 }
 
+if (!defined('BASE_FILTER_EMAIL_TEMPLATE_HEADER')) {
+    define('BASE_FILTER_EMAIL_TEMPLATE_HEADER', 'base_filter_email_template_header');
+}
+
+if (!defined('BASE_FILTER_EMAIL_TEMPLATE_FOOTER')) {
+    define('BASE_FILTER_EMAIL_TEMPLATE_FOOTER', 'base_filter_email_template_footer');
+}
+
 if (!defined('BASE_FILTER_AFTER_LOGIN_OR_REGISTER_FORM')) {
     define('BASE_FILTER_AFTER_LOGIN_OR_REGISTER_FORM', 'base_filter_after_login_or_register_form');
 }

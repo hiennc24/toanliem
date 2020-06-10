@@ -58,21 +58,4 @@
     <div class="clearfix"></div>
 @endif
 
-{!! Form::textarea($name, $value, $attributes) !!}
-
-@if (setting('rich_editor', config('core.base.general.editor.primary')) === 'tinymce')
-    @push('footer')
-        <script>
-            'use strict';
-            function setImageValue(file) {
-                $('.mce-btn.mce-open').parent().find('.mce-textbox').val(file);
-            }
-        </script>
-        <iframe id="form_target" name="form_target" style="display:none"></iframe>
-        <form id="tinymce_form" action="{{ route('media.files.upload.from.editor') }}" target="form_target" method="post" enctype="multipart/form-data" style="width:0;height:0;overflow:hidden;display: none;">
-            @csrf
-            <input name="upload" id="upload_file" type="file" onchange="$('#tinymce_form').submit();this.value='';">
-            <input type="hidden" value="tinymce" name="upload_type">
-        </form>
-    @endpush
-@endif
+{!! call_user_func_array([Form::class, setting('rich_editor', config('core.base.general.editor.primary'))], compact('name', 'value', 'attributes')) !!}

@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Storage;
+use RvMedia;
 
 class User extends Authenticatable
 {
@@ -109,7 +109,7 @@ class User extends Authenticatable
      */
     public function getAvatarUrlAttribute()
     {
-        return $this->avatar->url ? Storage::url($this->avatar->url) : (new Avatar)->create($this->getFullName())->toBase64();
+        return $this->avatar->url ? RvMedia::url($this->avatar->url) : (new Avatar)->create($this->getFullName())->toBase64();
     }
 
     /**

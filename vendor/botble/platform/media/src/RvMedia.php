@@ -186,21 +186,19 @@ class RvMedia
             ];
         }
 
-        request()->merge(['uploaded_file' => $fileUpload]);
+        if (!config('core.media.media.chunk.enabled')) {
+            request()->merge(['uploaded_file' => $fileUpload]);
 
-        $validator = Validator::make(request()->all(), [
-            'uploaded_file' => 'required|mimes:' . config('core.media.media.allowed_mime_types'),
-        ]);
+            $validator = Validator::make(request()->all(), [
+                'uploaded_file' => 'required|mimes:' . config('core.media.media.allowed_mime_types'),
+            ]);
 
-        if ($validator->fails()) {
-            return [
-                'error'   => true,
-                'message' => $validator->getMessageBag()->first(),
-            ];
-        }
-
-        try {
-            $file = $this->fileRepository->getModel();
+            if ($validator->fails()) {
+                return [
+                    'error'   => true,
+                    'message' => $validator->getMessageBag()->first(),
+                ];
+            }
 
             $maxSize = $this->getServerConfigMaxUploadFileSize();
 
@@ -210,10 +208,14 @@ class RvMedia
                     'message' => trans('core/media::media.file_too_big', ['size' => human_file_size($maxSize)]),
                 ];
             }
+        }
+
+        try {
+            $file = $this->fileRepository->getModel();
 
             $fileExtension = $fileUpload->getClientOriginalExtension();
 
-            if (!in_array($fileExtension, explode(',', config('core.media.media.allowed_mime_types')))) {
+            if (!in_array(strtolower($fileExtension), explode(',', config('core.media.media.allowed_mime_types')))) {
                 return [
                     'error'   => true,
                     'message' => trans('core/media::media.can_not_detect_file_type'),
@@ -240,7 +242,7 @@ class RvMedia
 
             $folderPath = $this->folderRepository->getFullPath($folderId);
 
-            $fileName = $this->fileRepository->createSlug($file->name, $fileExtension, Storage::path($folderPath));
+            $fileName = $this->fileRepository->createSlug($file->name, $fileExtension, RvMedia::getRealPath($folderPath));
 
             $filePath = $fileName;
 
@@ -250,7 +252,7 @@ class RvMedia
 
             $content = File::get($fileUpload->getRealPath());
 
-            $this->uploadManager->saveFile($filePath, $content);
+            $this->uploadManager->saveFile($filePath, $content, $fileUpload);
 
             $data = $this->uploadManager->fileDetails($filePath);
 
@@ -320,7 +322,6 @@ class RvMedia
 
     /**
      * @param \Botble\Media\Models\MediaFile|\Illuminate\Database\Eloquent\Model $file
-     * @param string|null $folderPath
      * @return bool
      */
     public function generateThumbnails(MediaFile $file): bool
@@ -332,7 +333,7 @@ class RvMedia
         foreach ($this->getSizes() as $size) {
             $readableSize = explode('x', $size);
             $this->thumbnailService
-                ->setImage(Storage::path($file->url))
+                ->setImage($this->getRealPath($file->url))
                 ->setSize($readableSize[0], $readableSize[1])
                 ->setDestinationPath(File::dirname($file->url))
                 ->setFileName(File::name($file->url) . '-' . $size . '.' . File::extension($file->url))
@@ -340,14 +341,14 @@ class RvMedia
         }
 
         if (config('core.media.media.watermark.source')) {
-            $image = Image::make(Storage::path($file->url));
+            $image = Image::make($this->getRealPath($file->url));
             $image->insert(
                 config('core.media.media.watermark.source'),
                 config('core.media.media.watermark.position', 'bottom-right'),
                 config('core.media.media.watermark.x', 10),
                 config('core.media.media.watermark.y', 10)
             );
-            $image->save(Storage::path($file->url));
+            $image->save($this->getRealPath($file->url));
         }
 
         return true;
@@ -455,6 +456,7 @@ class RvMedia
     }
 
     /**
+     * @param string $name
      * @return string
      */
     public function getSize(string $name): ?string
@@ -609,5 +611,30 @@ class RvMedia
     public function isImage($mimeType)
     {
         return Str::startsWith($mimeType, 'image/');
+    }
+
+    /**
+     * @param string $url
+     * @return string
+     */
+    public function getRealPath($url)
+    {
+        switch (config('filesystems.default')) {
+            case 'local':
+            case 'public':
+                return Storage::path($url);
+            case 's3':
+                return Storage::url($url);
+        }
+
+        return Storage::path($url);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isUsingCloud(): bool
+    {
+        return !in_array(config('filesystems.default'), ['local', 'public']);
     }
 }

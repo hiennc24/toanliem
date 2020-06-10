@@ -4,7 +4,7 @@ namespace Botble\Blog\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Storage;
+use RvMedia;
 
 class PostResource extends JsonResource
 {
@@ -22,7 +22,7 @@ class PostResource extends JsonResource
             'slug'        => $this->slug,
             'description' => $this->description,
             'content'     => $this->content,
-            'image'       => $this->image ? Storage::url($this->image) : null,
+            'image'       => $this->image ? RvMedia::url($this->image) : null,
             'categories'  => CategoryResource::collection($this->categories),
             'tags'        => TagResource::collection($this->tags),
             'created_at'  => $this->created_at,

@@ -478,6 +478,7 @@ abstract class TableAbstract extends DataTable
     /**
      * @return array
      * @since 2.1
+     * @throws \Throwable
      */
     public function buttons()
     {
@@ -630,7 +631,6 @@ abstract class TableAbstract extends DataTable
     /**
      * @param array $data
      * @param array $mergeData
-     * @param string $view
      * @return JsonResponse|View
      * @throws Throwable
      * @since 2.4
@@ -765,7 +765,7 @@ abstract class TableAbstract extends DataTable
 
     /**
      * @param string|null $title
-     * @param null $value
+     * @param string|null $value
      * @param string| null $type
      * @param null $data
      * @return array

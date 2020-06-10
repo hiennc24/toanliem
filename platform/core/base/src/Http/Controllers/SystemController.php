@@ -26,8 +26,12 @@ class SystemController extends Controller
 {
 
     /**
+     * @param Request $request
+     * @param TableBuilder $tableBuilder
      * @return Factory|View
      * @throws Throwable
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function getInfo(Request $request, TableBuilder $tableBuilder)
     {

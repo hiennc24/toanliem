@@ -484,7 +484,6 @@ class ThemeOption
 
     /**
      * @return null|string
-     * @throws FileNotFoundException
      */
     protected function getCurrentLocaleCode(): ?string
     {
@@ -520,7 +519,6 @@ class ThemeOption
     /**
      * @param string $key
      * @return bool
-     * @throws FileNotFoundException
      */
     public function hasOption(string $key): bool
     {
@@ -531,7 +529,6 @@ class ThemeOption
      * @param string $key
      * @param string $default
      * @return string
-     * @throws FileNotFoundException
      */
     public function getOption(string $key = '', ?string $default = ''): ?string
     {

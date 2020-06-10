@@ -89,6 +89,7 @@ class DashboardMenu
 
     /**
      * @param array|string $id
+     * @param null $parentId
      * @return $this
      */
     public function removeItem($id, $parentId = null): self

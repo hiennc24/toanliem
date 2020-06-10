@@ -12,7 +12,7 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use Storage;
+use RvMedia;
 
 /**
  * @since 19/08/2015 07:45 AM
@@ -54,7 +54,7 @@ class MediaFileRepository extends RepositoriesAbstract implements MediaFileInter
         $slug = Str::slug($name);
         $index = 1;
         $baseSlug = $slug;
-        while (File::exists(Storage::path(rtrim($folderPath, '/') . '/' . $slug . '.' . $extension))) {
+        while (File::exists(RvMedia::getRealPath(rtrim($folderPath, '/') . '/' . $slug . '.' . $extension))) {
             $slug = $baseSlug . '-' . $index++;
         }
 

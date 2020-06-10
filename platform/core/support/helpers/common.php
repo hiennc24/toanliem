@@ -60,7 +60,6 @@ if (!function_exists('get_file_data')) {
      * @param string $file
      * @param bool $toArray
      * @return bool|mixed
-     * @throws FileNotFoundException
      */
     function get_file_data($file, $toArray = true)
     {

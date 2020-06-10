@@ -75,11 +75,11 @@ class WidgetServiceProvider extends ServiceProvider
 
             register_widget(Text::class);
 
-            $widget_path = theme_path(setting('theme') . '/widgets');
-            $widgets = scan_folder($widget_path);
+            $widgetPath = theme_path(setting('theme') . '/widgets');
+            $widgets = scan_folder($widgetPath);
             if (!empty($widgets) && is_array($widgets)) {
                 foreach ($widgets as $widget) {
-                    $registration = $widget_path . '/' . $widget . '/registration.php';
+                    $registration = $widgetPath . '/' . $widget . '/registration.php';
                     if (File::exists($registration)) {
                         File::requireOnce($registration);
                     }

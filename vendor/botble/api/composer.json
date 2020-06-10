@@ -10,8 +10,8 @@
     "require": {
         "botble/platform": "*@dev",
         "laravel/passport": "^9.0",
-        "mpociot/laravel-apidoc-generator": "^4.0",
-        "fruitcake/laravel-cors": "^1.0"
+        "knuckleswtf/scribe": "^1.0",
+        "fruitcake/laravel-cors": "^2.0"
     },
     "extra": {
         "laravel": {

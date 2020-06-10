@@ -62,6 +62,7 @@ class PassportServiceProvider extends ServiceProvider
             $this->commands([
                 Console\InstallCommand::class,
                 Console\ClientCommand::class,
+                Console\HashCommand::class,
                 Console\KeysCommand::class,
                 Console\PurgeCommand::class,
             ]);
@@ -278,7 +279,7 @@ class PassportServiceProvider extends ServiceProvider
         return new RequestGuard(function ($request) use ($config) {
             return (new TokenGuard(
                 $this->app->make(ResourceServer::class),
-                Auth::createUserProvider($config['provider']),
+                new PassportUserProvider(Auth::createUserProvider($config['provider']), $config['provider']),
                 $this->app->make(TokenRepository::class),
                 $this->app->make(ClientRepository::class),
                 $this->app->make('encrypter')

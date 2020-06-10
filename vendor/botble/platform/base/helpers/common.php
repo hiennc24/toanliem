@@ -35,7 +35,7 @@ if (!function_exists('language_flag')) {
 if (!function_exists('render_editor')) {
     /**
      * @param string $name
-     * @param null $value
+     * @param string|null $value
      * @param bool $withShortCode
      * @param array $attributes
      * @return string
@@ -82,7 +82,6 @@ if (!function_exists('dashboard_menu')) {
 if (!function_exists('get_cms_version')) {
     /**
      * @return string
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     function get_cms_version(): string
     {
@@ -96,6 +95,7 @@ if (!function_exists('get_cms_version')) {
 
 if (!function_exists('platform_path')) {
     /**
+     * @param string|null $path
      * @return string
      */
     function platform_path($path = null): string
@@ -106,6 +106,7 @@ if (!function_exists('platform_path')) {
 
 if (!function_exists('core_path')) {
     /**
+     * @param string|null $path
      * @return string
      */
     function core_path($path = null): string
@@ -116,6 +117,7 @@ if (!function_exists('core_path')) {
 
 if (!function_exists('package_path')) {
     /**
+     * @param string|null $path
      * @return string
      */
     function package_path($path = null): string

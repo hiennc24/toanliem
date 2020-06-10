@@ -6,7 +6,7 @@
 
             <div class="flexbox-annotated-section-annotation">
                 <div class="annotated-section-title pd-all-20">
-                    <h2>{{ trans('core/setting::setting.email.title') }}</h2>
+                    <h2>{{ trans('core/setting::setting.email_setting_title') }}</h2>
                 </div>
                 <div class="annotated-section-description pd-all-20 p-none-t">
                     <p class="color-note">{{ trans('core/setting::setting.email.description') }}</p>
@@ -95,53 +95,6 @@
                                value="{{ setting('email_from_address', config('mail.from.address')) }}" placeholder="admin@example.com">
                     </div>
 
-                </div>
-            </div>
-        </div>
-
-        <div class="flexbox-annotated-section">
-
-            <div class="flexbox-annotated-section-annotation">
-                <div class="annotated-section-title pd-all-20">
-                    <h2>{{ trans('core/setting::setting.email.template_title') }}</h2>
-                </div>
-                <div class="annotated-section-description pd-all-20 p-none-t">
-                    <p class="color-note">{{ trans('core/setting::setting.email.template_description') }}</p>
-                </div>
-            </div>
-
-            <div class="flexbox-annotated-section-content">
-                <div class="wrapper-content pd-all-20">
-                    <div class="table-wrap">
-                        <table class="table product-list ws-nm">
-                            <thead>
-                            <tr>
-                                <th class="border-none-b">{{ trans('core/setting::setting.template') }}</th>
-                                <th class="border-none-b"> {{ trans('core/setting::setting.description') }} </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <a class="hover-underline a-detail-template"
-                                           href="{{ route('setting.email.template.edit', ['type' => 'core', 'name' => 'base', 'template_file' => 'header']) }}">
-                                            {{ trans('core/setting::setting.email.template_header') }}
-                                        </a>
-                                    </td>
-                                    <td>{{ trans('core/setting::setting.email.template_header_description') }}</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <a class="hover-underline a-detail-template"
-                                           href="{{ route('setting.email.template.edit', ['type' => 'core', 'name' => 'base', 'template_file' => 'footer']) }}">
-                                            {{ trans('core/setting::setting.email.template_footer') }}
-                                        </a>
-                                    </td>
-                                    <td>{{ trans('core/setting::setting.email.template_footer_description') }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
                 </div>
             </div>
         </div>

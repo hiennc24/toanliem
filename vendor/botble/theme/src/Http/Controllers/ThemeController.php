@@ -60,7 +60,6 @@ class ThemeController extends BaseController
      * @param BaseHttpResponse $response
      * @param SettingStore $settingStore
      * @return BaseHttpResponse
-     * @throws FileNotFoundException
      */
     public function postUpdate(Request $request, BaseHttpResponse $response, SettingStore $settingStore)
     {
@@ -81,6 +80,7 @@ class ThemeController extends BaseController
      * @param BaseHttpResponse $response
      * @param ThemeService $themeService
      * @return BaseHttpResponse
+     * @throws FileNotFoundException
      */
     public function postActivateTheme(Request $request, BaseHttpResponse $response, ThemeService $themeService)
     {

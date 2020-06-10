@@ -8,8 +8,9 @@ use Illuminate\Database\Eloquent\Collection;
 interface MenuNodeInterface extends RepositoryInterface
 {
     /**
-     * @param $parentId
-     * @param null array
+     * @param int $menuId
+     * @param int $parentId
+     * @param array $select
      * @return array|Collection|static[]
      */
     public function getByMenuId($menuId, $parentId, $select = ['*']);

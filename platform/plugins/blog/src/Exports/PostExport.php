@@ -3,6 +3,7 @@
 namespace Botble\Blog\Exports;
 
 use Botble\Table\Supports\TableExportHandler;
+use Exception;
 use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing;
@@ -74,6 +75,10 @@ class PostExport extends TableExportHandler
      */
     protected function getImageResourceFromURL($imageUrl)
     {
-        return imagecreatefromstring(file_get_contents($imageUrl));
+        try {
+            return imagecreatefromstring(file_get_contents($imageUrl));
+        } catch (Exception $exception) {
+            return null;
+        }
     }
 }

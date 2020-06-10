@@ -20,6 +20,7 @@ class PostForm extends FormAbstract
 
     /**
      * {@inheritDoc}
+     * @throws \Exception
      */
     public function buildForm()
     {

@@ -24,7 +24,9 @@
                 <div class="page-content @if (Route::currentRouteName() == 'media.index') rv-media-integrate-wrapper @endif">
                     {!! Breadcrumbs::render('main', page_title()->getTitle(false)) !!}
                     <div class="clearfix"></div>
-                    @yield('content')
+                    <div id="main">
+                        @yield('content')
+                    </div>
                 </div>
             </div>
             <div class="clearfix"></div>

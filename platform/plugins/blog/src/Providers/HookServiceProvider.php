@@ -158,7 +158,6 @@ class HookServiceProvider extends ServiceProvider
     /**
      * @param Eloquent $slug
      * @return array|Eloquent
-     * @throws FileNotFoundException
      * @throws BindingResolutionException
      */
     public function handleSingleView($slug)
@@ -268,7 +267,6 @@ class HookServiceProvider extends ServiceProvider
     /**
      * @param stdClass $shortcode
      * @return array|string
-     * @throws FileNotFoundException
      * @throws Throwable
      */
     public function renderBlogPosts($shortcode)
@@ -287,6 +285,7 @@ class HookServiceProvider extends ServiceProvider
     /**
      * @param string|null $content
      * @param Page $page
+     * @return array|string|null
      * @throws Throwable
      */
     public function renderBlogPage(?string $content, Page $page)

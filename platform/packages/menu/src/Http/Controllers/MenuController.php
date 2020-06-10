@@ -20,6 +20,7 @@ use Botble\Support\Services\Cache\Cache;
 use Exception;
 use Illuminate\Cache\CacheManager;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Menu;
@@ -81,6 +82,7 @@ class MenuController extends BaseController
     }
 
     /**
+     * @param FormBuilder $formBuilder
      * @return string
      */
     public function create(FormBuilder $formBuilder)
@@ -117,7 +119,7 @@ class MenuController extends BaseController
     }
 
     /**
-     * @param $menu
+     * @param Model $menu
      * @param Request $request
      * @return bool
      * @throws Exception
@@ -145,7 +147,7 @@ class MenuController extends BaseController
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @param Request $request
      * @param FormBuilder $formBuilder
      * @return string
@@ -172,7 +174,7 @@ class MenuController extends BaseController
 
     /**
      * @param MenuRequest $request
-     * @param $id
+     * @param int $id
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
      * @throws Exception
@@ -202,7 +204,7 @@ class MenuController extends BaseController
 
     /**
      * @param Request $request
-     * @param $id
+     * @param int $id
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
      */

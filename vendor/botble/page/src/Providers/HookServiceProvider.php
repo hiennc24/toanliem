@@ -10,9 +10,7 @@ use Botble\Page\Repositories\Interfaces\PageInterface;
 use Botble\SeoHelper\SeoOpenGraph;
 use Eloquent;
 use Illuminate\Contracts\Container\BindingResolutionException;
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
 use Menu;
 use SeoHelper;
@@ -50,9 +48,10 @@ class HookServiceProvider extends ServiceProvider
 
     /**
      * @param array $widgets
-     * @param Collection $widget_settings
+     * @param $widgetSettings
      * @return array
      *
+     * @throws BindingResolutionException
      * @throws Throwable
      */
     public function addPageStatsWidget($widgets, $widgetSettings)
@@ -75,7 +74,6 @@ class HookServiceProvider extends ServiceProvider
      * @param Eloquent $slug
      * @return array|Eloquent
      *
-     * @throws FileNotFoundException
      * @throws BindingResolutionException
      */
     public function handleSingleView($slug)

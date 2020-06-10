@@ -2,21 +2,18 @@
 
 namespace Botble\Media\Http\Controllers;
 
-use File;
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
+use Botble\Media\Chunks\Handler\DropZoneUploadHandler;
+use Exception;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
-use Botble\Media\Http\Requests\MediaFileRequest;
 use Botble\Media\Repositories\Interfaces\MediaFileInterface;
-use Botble\Media\Repositories\Interfaces\MediaFolderInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Arr;
+use Botble\Media\Chunks\Exceptions\UploadMissingFileException;
+use Botble\Media\Chunks\Receiver\FileReceiver;
 use RvMedia;
-use Storage;
-use Validator;
 
 /**
  * @since 19/08/2015 07:50 AM
@@ -29,33 +26,61 @@ class MediaFileController extends Controller
     protected $fileRepository;
 
     /**
-     * @var MediaFolderInterface
-     */
-    protected $folderRepository;
-
-    /**
      * @param MediaFileInterface $fileRepository
-     * @param MediaFolderInterface $folderRepository
      */
-    public function __construct(MediaFileInterface $fileRepository, MediaFolderInterface $folderRepository)
+    public function __construct(MediaFileInterface $fileRepository)
     {
         $this->fileRepository = $fileRepository;
-        $this->folderRepository = $folderRepository;
     }
 
     /**
-     * @param MediaFileRequest $request
+     * @param Request $request
      * @return JsonResponse
-     * @throws FileNotFoundException
      */
-    public function postUpload(MediaFileRequest $request)
+    public function postUpload(Request $request)
     {
-        $result = RvMedia::handleUpload(Arr::first($request->file('file')), $request->input('folder_id', 0));
+        if (!config('core.media.media.chunk.enabled')) {
+            $result = RvMedia::handleUpload(Arr::first($request->file('file')), $request->input('folder_id', 0));
 
+            return $this->handleUploadResponse($result);
+        }
+
+        try {
+            // Create the file receiver
+            $receiver = new FileReceiver('file', $request, DropZoneUploadHandler::class);
+            // Check if the upload is success, throw exception or return response you need
+            if ($receiver->isUploaded() === false) {
+                throw new UploadMissingFileException;
+            }
+            // Receive the file
+            $save = $receiver->receive();
+            // Check if the upload has finished (in chunk mode it will send smaller files)
+            if ($save->isFinished()) {
+                $result = RvMedia::handleUpload($save->getFile(), $request->input('folder_id', 0));
+
+                return $this->handleUploadResponse($result);
+            }
+            // We are in chunk mode, lets send the current progress
+            $handler = $save->handler();
+            return response()->json([
+                'done'   => $handler->getPercentageDone(),
+                'status' => true,
+            ]);
+        } catch (Exception $exception) {
+            return RvMedia::responseError($exception->getMessage());
+        }
+    }
+
+    /**
+     * @param array $result
+     * @return JsonResponse
+     */
+    protected function handleUploadResponse(array $result)
+    {
         if ($result['error'] == false) {
             return RvMedia::responseSuccess([
                 'id'  => $result['data']->id,
-                'src' => Storage::url($result['data']->url),
+                'src' => RvMedia::url($result['data']->url),
             ]);
         }
 
@@ -65,7 +90,6 @@ class MediaFileController extends Controller
     /**
      * @param Request $request
      * @return ResponseFactory|JsonResponse|Response
-     * @throws FileNotFoundException
      */
     public function postUploadFromEditor(Request $request)
     {

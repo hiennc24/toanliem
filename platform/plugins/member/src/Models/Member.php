@@ -8,7 +8,7 @@ use Botble\Member\Notifications\ResetPasswordNotification;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
-use Storage;
+use RvMedia;
 
 /**
  * @mixin \Eloquent
@@ -74,7 +74,7 @@ class Member extends Authenticatable
      */
     public function getAvatarUrlAttribute()
     {
-        return $this->avatar->url ? Storage::url($this->avatar->url) : (new Avatar)->create($this->getFullName())->toBase64();
+        return $this->avatar->url ? RvMedia::url($this->avatar->url) : (new Avatar)->create($this->getFullName())->toBase64();
     }
 
     /**

@@ -19,7 +19,6 @@ return [
         ],
         'primary'  => env('PRIMARY_EDITOR', 'ckeditor'),
     ],
-    'email_template'            => 'core/base::system.email',
     'error_reporting'           => [
         'to'           => null,
         'via_slack'    => env('SLACK_REPORT_ENABLED', false),

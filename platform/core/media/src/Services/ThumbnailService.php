@@ -5,7 +5,6 @@ namespace Botble\Media\Services;
 use Exception;
 use Intervention\Image\ImageManager;
 use Log;
-use Storage;
 
 class ThumbnailService
 {
@@ -61,10 +60,16 @@ class ThumbnailService
     protected $fileName;
 
     /**
+     * @var UploadsManager
+     */
+    protected $uploadManager;
+
+    /**
      * ThumbnailService constructor.
+     * @param UploadsManager $uploadManager
      * @param ImageManager $imageManager
      */
-    public function __construct(ImageManager $imageManager)
+    public function __construct(UploadsManager $uploadManager, ImageManager $imageManager)
     {
         $this->thumbRate = 0.75;
         $this->xCoordinate = null;
@@ -76,7 +81,8 @@ class ThumbnailService
             $driver = 'imagick';
         }
 
-        $this->imageManager = $imageManager->configure(['driver' => $driver]);
+        $this->imageManager = $imageManager->configure(compact('driver'));
+        $this->uploadManager = $uploadManager;
     }
 
     /**
@@ -96,25 +102,6 @@ class ThumbnailService
     public function getImage()
     {
         return $this->imagePath;
-    }
-
-    /**
-     * @param double $rate
-     * @return ThumbnailService
-     */
-    public function setRate($rate)
-    {
-        $this->thumbRate = $rate;
-
-        return $this;
-    }
-
-    /**
-     * @return double
-     */
-    public function getRate()
-    {
-        return $this->thumbRate;
     }
 
     /**
@@ -154,16 +141,8 @@ class ThumbnailService
     }
 
     /**
-     * @return string
-     */
-    public function getDestinationPath()
-    {
-        return $this->destinationPath;
-    }
-
-    /**
-     * @param integer $xCoord
-     * @param integer $yCoord
+     * @param int $xCoordination
+     * @param int $yCoordination
      * @return ThumbnailService
      */
     public function setCoordinates($xCoordination, $yCoordination)
@@ -180,25 +159,6 @@ class ThumbnailService
     public function getCoordinates()
     {
         return [$this->xCoordinate, $this->yCoordinate];
-    }
-
-    /**
-     * @param string $position
-     * @return ThumbnailService
-     */
-    public function setFitPosition($position)
-    {
-        $this->fitPosition = $position;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFitPosition()
-    {
-        return $this->fitPosition;
     }
 
     /**
@@ -248,7 +208,7 @@ class ThumbnailService
         }
 
         try {
-            $thumbImage->save(Storage::path($destinationPath));
+            $this->uploadManager->saveFile($destinationPath, $thumbImage->stream()->__toString());
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
             return false;

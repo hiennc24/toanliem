@@ -29,7 +29,7 @@ class SystemManagement
     {
         $packages = [];
         foreach ($packagesArray as $key => $value) {
-            $packageFile = base_path('/vendor/' . $key . '/composer.json');
+            $packageFile = base_path('vendor/' . $key . '/composer.json');
 
             if ($key !== 'php' && File::exists($packageFile)) {
                 $json2 = file_get_contents($packageFile);
@@ -115,6 +115,6 @@ class SystemManagement
      */
     protected static function checkSslIsInstalled(): bool
     {
-        return (!empty(Request::server('HTTPS')) && Request::server('HTTPS') != 'off') ? true : false;
+        return !empty(Request::server('HTTPS')) && Request::server('HTTPS') != 'off';
     }
 }
